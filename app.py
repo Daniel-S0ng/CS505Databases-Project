@@ -1,9 +1,9 @@
+import threading
 from flask import Flask, render_template, request, jsonify
 import json
+from Subscriber import run_subscriber
 
 from mongo import mongo_connection, close_mongo_connection
-from sqlite import sqlite_connection, close_sqlite_connection
-
 
 app = Flask(__name__)
 
@@ -99,7 +99,7 @@ def patientStatusByHospitalId(hospital_id):
 @app.route("/api/getpatientstatus/")
 def patientstatus():
     #To address OF2 in the assignment
-    #TODO: have this call a function in the controller which returns counts for 
+    #TODO: have this call a nction in the controller which returns counts for 
     # in-patients, icu patients, and patients on ventilators, along with percentage vaccinated
 
     response = { "in-patient_count": 178,
@@ -111,6 +111,7 @@ def patientstatus():
     
     return (render_template('patientstatus.html', patient_status = jsonify(response)), jsonify(response))
 
-
 if __name__ == '__main__':
+    subscriber_thread = threading.Thread(target=run_subscriber)
+    subscriber_thread.start()
     app.run(host="0.0.0.0", port=9999, debug=True)

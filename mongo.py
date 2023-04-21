@@ -15,5 +15,10 @@ def insert_vaccination_data(vaccination_data):
     vaccination_collection = mongo_db["vaccination_data"]
     vaccination_collection.insert_many(vaccination_data)
 
+def insert_hospital_data(hospital_data):
+    mongo_db = mongo_connection()
+    hospital_collection = mongo_db["hospital_data"]
+    hospital_collection.insert_many(hospital_data)
+
 def close_mongo_connection(mongo_client):
     mongo_client.close()
