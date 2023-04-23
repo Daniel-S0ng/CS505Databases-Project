@@ -41,11 +41,26 @@ def testCallBack(topic, message):
     elif topic == "vax_list":
         mongo.insert_vaccination_data(data)
 
+    # sort the json by zipcode
+
+    # check if the zipcode patient count is twice as high than what's in mongo
+
+    # if it is or patient is twice as low, insert or remove the alert from mongo.
+
 def generate_test_data():
     return json.dumps([{
         "testing_id": 1,
         "patient_name": "Lebron James",
         "patient_mrn": "024c60d2-a1eb",
+        "patient_zipcode": 40351,
+        "patient_status": 1,
+        "contact_list": ["498d-8739", "0d2-a1eb-498"],
+        "event_list": ["234fs-3493", "fsf545-dfs54"]
+    },
+    {
+        "testing_id": 2,
+        "patient_name": "test test",
+        "patient_mrn": "024c60d2-a2eb",
         "patient_zipcode": 40351,
         "patient_status": 1,
         "contact_list": ["498d-8739", "0d2-a1eb-498"],
@@ -68,25 +83,26 @@ def generate_vax_data():
     }])
 
 def run_subscriber():
-    while True:
-        time.sleep(1)  # Simulate a delay between messages
+    #while True:
+        # time.sleep(1)  # Simulate a delay between messages
 
-        # Simulate receiving a testing data message
-        testing_data = generate_test_data()
-        testCallBack("patient_list", testing_data)
+        # # Simulate receiving a testing data message
+        # testing_data = generate_test_data()
+        # testCallBack("patient_list", testing_data)
 
-        time.sleep(1)
+        # time.sleep(1)
 
-        # Simulate receiving a hospital data message
-        hospital_data = generate_hospital_data()
-        testCallBack("hospital_list", hospital_data)
+        # # Simulate receiving a hospital data message
+        # hospital_data = generate_hospital_data()
+        # testCallBack("hospital_list", hospital_data)
 
-        time.sleep(1)
+        # time.sleep(1)
 
-        # Simulate receiving a vaccination data message
-        vax_data = generate_vax_data()
-        testCallBack("vax_list", vax_data)
+        # # Simulate receiving a vaccination data message
+        # vax_data = generate_vax_data()
+        # testCallBack("vax_list", vax_data)
         
+    return
 # def run_subscriber():
 #     credentials = pika.PlainCredentials(username, password)
 #     parameters = pika.ConnectionParameters(hostname, port, virtualhost, credentials)
